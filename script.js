@@ -241,7 +241,7 @@ let activeChapterId = 1;
 
 // --- GEMINI API INTEGRATION ---
 async function callGeminiAPI(prompt, systemInstruction = "", schema = null) {
-    const apiKey = ""; 
+    const apiKey = localStorage.getItem('gemini_api_key') || ""; 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
     const payload = {
@@ -632,5 +632,38 @@ const mouseUpHandler = function() {
 };
 
 resizer.addEventListener('mousedown', mouseDownHandler);
+
+// --- API KEY MODAL ---
+function openApiKeyModal() {
+    const modal = document.getElementById('apikey-modal');
+    modal.classList.add('active');
+    const savedKey = localStorage.getItem('gemini_api_key') || '';
+    const input = document.getElementById('apikey-input');
+    input.value = savedKey;
+    const status = document.getElementById('apikey-status');
+    if (savedKey) {
+        status.innerHTML = `<span style="color:#10b981;">✅ Đã cài đặt key (${savedKey.slice(0,8)}...)</span>`;
+    } else {
+        status.innerHTML = `<span style="color:#f59e0b;">⚠️ Chưa có API key — tính năng AI chưa hoạt động</span>`;
+    }
+    setTimeout(() => input.focus(), 100);
+}
+
+function closeApiKeyModal() {
+    document.getElementById('apikey-modal').classList.remove('active');
+}
+
+function saveApiKey() {
+    const input = document.getElementById('apikey-input');
+    const key = input.value.trim();
+    const status = document.getElementById('apikey-status');
+    if (!key) {
+        status.innerHTML = `<span style="color:#ef4444;">❌ Vui lòng nhập API key!</span>`;
+        return;
+    }
+    localStorage.setItem('gemini_api_key', key);
+    status.innerHTML = `<span style="color:#10b981;">✅ Đã lưu! Tính năng AI sẵn sàng hoạt động.</span>`;
+    setTimeout(() => closeApiKeyModal(), 1500);
+}
 
 init();
