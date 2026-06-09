@@ -239,36 +239,44 @@ const exampleIllustrations = [
 let mathData = fallbackData;
 let activeChapterId = 1;
 
-// --- GEMINI API INTEGRATION ---
+// --- GROQ AI INTEGRATION (thay thế Gemini - hoạt động tại Việt Nam) ---
 async function callGeminiAPI(prompt, systemInstruction = "", schema = null) {
-    const apiKey = localStorage.getItem('gemini_api_key') || "AQ.Ab8RN6JmXEsUDnwm4nf4L2fujF7K7M87woFnwOHGoRggZVg1vg"; 
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+    const apiKey = localStorage.getItem('gemini_api_key') || (window.GROQ_API_KEY || window.GEMINI_API_KEY) || "";
+    const url = "https://api.groq.com/openai/v1/chat/completions";
+
+    const messages = [];
+    if (systemInstruction) {
+        messages.push({ role: "system", content: systemInstruction });
+    }
+    messages.push({ role: "user", content: prompt });
 
     const payload = {
-        contents: [{ parts: [{ text: prompt }] }],
+        model: "llama-3.3-70b-versatile",
+        messages: messages,
+        temperature: 0.7,
+        max_tokens: 2048
     };
-    if (systemInstruction) {
-        payload.systemInstruction = { parts: [{ text: systemInstruction }] };
-    }
+
+    // Nếu cần JSON output
     if (schema) {
-        payload.generationConfig = {
-            responseMimeType: "application/json",
-            responseSchema: schema
-        };
+        payload.response_format = { type: "json_object" };
     }
 
-    let retries = 5;
+    let retries = 3;
     let delay = 1000;
     for (let i = 0; i < retries; i++) {
         try {
             const response = await fetch(url, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`
+                },
                 body: JSON.stringify(payload)
             });
             if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             const result = await response.json();
-            return result.candidates?.[0]?.content?.parts?.[0]?.text;
+            return result.choices?.[0]?.message?.content;
         } catch (e) {
             if (i === retries - 1) throw e;
             await new Promise(res => setTimeout(res, delay));
