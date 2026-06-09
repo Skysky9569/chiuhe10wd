@@ -241,7 +241,7 @@ let activeChapterId = 1;
 
 // --- GEMINI API INTEGRATION ---
 async function callGeminiAPI(prompt, systemInstruction = "", schema = null) {
-    const apiKey = localStorage.getItem('gemini_api_key') || ""; 
+    const apiKey = localStorage.getItem('gemini_api_key') || "AQ.Ab8RN6JmXEsUDnwm4nf4L2fujF7K7M87woFnwOHGoRggZVg1vg"; 
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
     const payload = {
