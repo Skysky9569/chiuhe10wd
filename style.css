@@ -1,0 +1,338 @@
+:root {
+    --bg-color: #fcf9f7;
+    --sidebar-bg: #ffffff;
+    --text-main: #37352f;
+    --text-sub: #6b7280;
+    --accent-color: #6366f1;
+    --accent-soft: #e0e7ff;
+    --sidebar-width: 300px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+    --radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Be Vietnam Pro', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    transition: background-color 0.3s;
+}
+
+#app-wrapper {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    position: relative;
+}
+
+/* --- Lớp nền mờ (Overlay) khi mở menu trên điện thoại --- */
+.sidebar-overlay {
+    visibility: hidden;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(2px);
+    z-index: 90;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+body.sidebar-open .sidebar-overlay {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* --- Sidebar Styles --- */
+aside {
+    width: var(--sidebar-width);
+    background: var(--sidebar-bg);
+    border-right: 1px solid #eee;
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 100;
+    padding: 2rem 1rem;
+    transition: var(--transition);
+}
+
+.resizer {
+    position: absolute;
+    top: 0; right: 0; width: 6px; height: 100%;
+    cursor: col-resize; background-color: transparent;
+    transition: background-color 0.2s; z-index: 101;
+}
+
+.resizer:hover, body.is-resizing .resizer { background-color: var(--accent-color); }
+body.is-resizing aside, body.is-resizing main { transition: none !important; }
+body.is-resizing { cursor: col-resize; user-select: none; }
+
+.logo {
+    padding: 0 0.5rem 2rem;
+    font-weight: 700; font-size: 1.25rem;
+    display: flex; align-items: center; justify-content: space-between;
+    color: var(--accent-color);
+}
+
+.logo-text {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Nút tắt sidebar trên mobile */
+.close-sidebar-btn {
+    display: none;
+    background: #f3f4f6;
+    border: none;
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-sub);
+    transition: var(--transition);
+}
+
+.close-sidebar-btn:hover {
+    background: var(--accent-soft);
+    color: var(--accent-color);
+}
+
+.nav-item {
+    list-style: none;
+    padding: 0.85rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: var(--radius);
+    cursor: pointer; 
+    display: flex; 
+    align-items: flex-start; 
+    gap: 12px;
+    color: var(--text-sub); 
+    transition: var(--transition);
+}
+
+.nav-item:hover { background: #f3f4f6; color: var(--text-main); transform: translateX(4px); }
+.nav-item.active { background: var(--accent-soft); color: var(--accent-color); }
+.nav-item .chapter-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+
+.nav-item-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+.nav-item-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    opacity: 0.7;
+    letter-spacing: 0.5px;
+}
+
+.nav-item-title {
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.3;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.nav-item.active .nav-item-num {
+    color: var(--accent-color);
+    opacity: 0.9;
+}
+
+.nav-item.active .nav-item-title {
+    font-weight: 600;
+}
+
+/* --- Main Content Styles --- */
+main {
+    flex: 1; margin-left: var(--sidebar-width);
+    padding: 3rem; max-width: 1000px; margin-right: auto;
+    transition: var(--transition);
+}
+
+.chapter-header {
+    margin-bottom: 3rem; padding: 3rem; border-radius: 24px;
+    color: white; position: relative; overflow: hidden;
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.chapter-header h1 { font-size: 2.2rem; font-weight: 700; position: relative; z-index: 1; margin-top: 0.5rem; line-height: 1.3; }
+.chapter-header .chapter-icon-lg { font-size: 3.5rem; display: inline-block; margin-bottom: 0.5rem; }
+.illustration { position: absolute; right: -20px; bottom: -20px; opacity: 0.2; width: 250px; height: auto; color: white; pointer-events: none; }
+
+section { margin-bottom: 3.5rem; animation: fadeIn 0.6s ease-out forwards; }
+h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; color: #1f2937; }
+
+/* --- Trọng tâm --- */
+.key-points-grid { display: grid; gap: 1rem; }
+.key-point-card { background: white; padding: 1.25rem 1.5rem; border-radius: var(--radius); border: 1px solid #f3f4f6; box-shadow: var(--shadow-sm); transition: var(--transition); display: flex; align-items: flex-start; gap: 12px; font-size: 1rem; }
+.key-point-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--accent-soft); }
+.key-point-card::before { content: "🎯"; flex-shrink: 0; margin-top: 2px; font-size: 1.1rem; }
+
+/* Đảm bảo MathJax không bao giờ đẩy đè chữ hoặc tràn khung trên mobile */
+mjx-container, svg {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    vertical-align: middle;
+}
+
+/* --- Công thức & AI Features --- */
+.formulas-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1rem; align-items: start; }
+.formula-pill { background: white; border: 1px solid #e5e7eb; padding: 1.25rem; border-radius: 16px; display: flex; align-items: flex-start; justify-content: space-between; gap: 15px; transition: var(--transition); }
+.formula-pill:hover { border-color: var(--accent-color); box-shadow: var(--shadow-sm); }
+
+.formula-info {
+    display: flex; flex-direction: column; gap: 10px;
+    overflow-x: auto; 
+    overflow-y: hidden; /* Fix vertical scrollbar */
+    padding-bottom: 5px; 
+    min-width: 0; 
+}
+
+.formula-info::-webkit-scrollbar { height: 5px; width: 0px !important; } 
+.formula-info::-webkit-scrollbar-track { background: transparent; }
+.formula-info::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+.formula-name { font-size: 0.85rem; font-weight: 600; color: var(--accent-color); background: var(--accent-soft); padding: 4px 10px; border-radius: 6px; width: fit-content; }
+.formula-text { font-size: 1.1rem; color: var(--text-main); user-select: auto; min-height: 40px; padding: 10px 0; display: flex; align-items: center; white-space: nowrap; }
+
+/* Buttons for formulas */
+.formula-actions { display: flex; flex-direction: column; gap: 8px; flex-shrink: 0; justify-content: center; }
+.action-btn { background: #f3f4f6; border: none; cursor: pointer; padding: 8px; border-radius: 8px; color: var(--text-sub); transition: var(--transition); display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; }
+.action-btn:hover { background: var(--accent-soft); color: var(--accent-color); }
+.action-btn.copied { background: #d1fae5; color: #10b981; animation: pulse 0.5s ease-out; }
+
+.ai-btn { background: #fffbeb; color: #f59e0b; font-size: 1.1rem; }
+.ai-btn:hover { background: #fef3c7; color: #d97706; transform: scale(1.1); box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2); }
+
+@keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+
+/* --- AI Practice Section --- */
+.ai-practice-card { background: linear-gradient(145deg, #ffffff, #faf5ff); border-radius: 16px; border-left: 6px solid #a855f7; padding: 1.75rem; box-shadow: var(--shadow-sm); }
+.ai-practice-card p { margin-bottom: 1rem; font-weight: 500; color: #475569; }
+
+.primary-btn { background: var(--accent-color); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 0.95rem; }
+.primary-btn:hover { filter: brightness(1.1); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+.primary-btn:disabled { opacity: 0.7; cursor: not-allowed; transform: none; box-shadow: none; }
+.secondary-btn { background: white; color: var(--text-main); border: 1px solid #d1d5db; padding: 8px 16px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 8px; font-family: inherit; font-size: 0.9rem; }
+.secondary-btn:hover { background: #f9fafb; border-color: #9ca3af; }
+
+.math-content { font-size: 1.05rem; line-height: 1.7; color: #1e293b; }
+.math-content p { margin-bottom: 0.75rem; }
+.math-content ul { margin-left: 1.5rem; margin-bottom: 0.75rem; }
+.math-content b, .math-content strong { color: var(--accent-color); }
+
+.ai-problem-card { background: white; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; }
+.ai-problem-card h4 { color: #a855f7; margin-bottom: 1rem; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+
+/* --- Ví dụ --- */
+.example-card { background: white; border-radius: 16px; border-left: 6px solid var(--accent-color); padding: 1.75rem; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 1.5rem; }
+.example-main { display: flex; gap: 2rem; align-items: flex-start; }
+.example-content { flex: 1; }
+.example-diagram { width: 160px; height: 160px; background: var(--bg-color); border-radius: 12px; display: flex; align-items: center; justify-content: center; padding: 15px; color: var(--accent-color); flex-shrink: 0; }
+.example-diagram svg { width: 100%; height: 100%; }
+.example-problem { font-weight: 600; font-size: 1.05rem; margin-bottom: 1.25rem; color: #111827; }
+.example-solution-toggle { display: inline-flex; align-items: center; gap: 8px; color: var(--accent-color); font-size: 0.95rem; font-weight: 600; cursor: pointer; user-select: none; padding: 8px 16px; background: var(--bg-color); border-radius: 8px; transition: var(--transition); }
+.example-solution-toggle:hover { background: var(--accent-soft); }
+.example-solution-content { margin-top: 0.5rem; padding: 1.25rem; background: #f9fafb; border-radius: 8px; border: 1px solid #f3f4f6; display: none; font-size: 0.95rem; }
+
+/* --- Bài học --- */
+.lessons-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+.lesson-card { background: white; padding: 1.25rem; border-radius: var(--radius); border: 1px solid #f3f4f6; display: flex; flex-direction: column; gap: 12px; transition: var(--transition); }
+.lesson-card:hover { border-color: var(--accent-color); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.lesson-icon-sm { width: 36px; height: 36px; padding: 7px; border-radius: 10px; background: var(--accent-soft); color: var(--accent-color); display: flex; align-items: center; justify-content: center; }
+.lesson-icon-sm svg { width: 100%; height: 100%; }
+.lesson-text { font-size: 0.95rem; font-weight: 600; color: #374151; line-height: 1.4; }
+
+/* --- Mobile Header & Responsive --- */
+.mobile-header { display: none; position: fixed; top: 0; left: 0; right: 0; background: white; padding: 1rem; border-bottom: 1px solid #eee; z-index: 110; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+.hamburger { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; cursor: pointer; background: #f3f4f6; border: none; border-radius: 8px; color: #374151; }
+.mobile-header .logo { padding: 0; margin: 0; }
+
+@media (max-width: 1024px) { main { padding: 2.5rem; } }
+
+@media (max-width: 768px) {
+    :root { --sidebar-width: 280px; }
+    .resizer { display: none; }
+    
+    aside { left: -var(--sidebar-width); box-shadow: 5px 0 25px rgba(0,0,0,0.15); z-index: 120; }
+    aside.open { left: 0; }
+
+    /* Hiện nút đóng sidebar ở góc logo trên mobile */
+    .close-sidebar-btn {
+        display: flex;
+    }
+
+    main { margin-left: 0; padding: 1.25rem; padding-top: 5.5rem; }
+    .mobile-header { display: flex; }
+
+    .chapter-header { padding: 1.75rem; border-radius: 20px; }
+    .chapter-header h1 { font-size: 1.75rem; }
+    .chapter-header .chapter-icon-lg { font-size: 2.5rem; }
+
+    .formulas-container { grid-template-columns: 1fr; }
+    .example-main { flex-direction: column-reverse; gap: 1.5rem; }
+    .example-diagram { width: 100%; height: 180px; }
+    .illustration { width: 180px; right: -10px; bottom: -10px; }
+}
+
+.svg-icon { width: 20px; height: 20px; vertical-align: middle; }
+
+/* --- AI Modal Styles --- */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; }
+.modal-overlay.active { display: flex; opacity: 1; }
+.modal-content { background: white; border-radius: 20px; width: 90%; max-width: 550px; padding: 2rem; position: relative; max-height: 85vh; overflow-y: auto; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25); transform: translateY(20px); transition: transform 0.3s ease; }
+.modal-overlay.active .modal-content { transform: translateY(0); }
+.modal-close { position: absolute; top: 15px; right: 15px; width: 32px; height: 32px; border-radius: 50%; background: #f1f5f9; border: none; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b; transition: all 0.2s; }
+.modal-close:hover { background: #e2e8f0; color: #0f172a; }
+
+.loader-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2rem; gap: 1rem; color: var(--text-sub); text-align: center; }
+.loader { width: 40px; height: 40px; border: 4px solid var(--accent-soft); border-top-color: var(--accent-color); border-radius: 50%; animation: spin 1s linear infinite; }
+.spinner-inline { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 1s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* --- Chế độ Mô phỏng Điện thoại (Desktop only) --- */
+.mobile-preview-btn { position: fixed; bottom: 2rem; right: 2rem; background: #111827; color: white; padding: 12px 20px; border-radius: 50px; font-weight: 600; border: none; cursor: pointer; box-shadow: 0 10px 20px -5px rgba(0,0,0,0.2); z-index: 2000; display: flex; align-items: center; gap: 10px; transition: var(--transition); }
+.mobile-preview-btn:hover { transform: translateY(-3px); background: var(--accent-color); }
+@media (max-width: 768px) { .mobile-preview-btn { display: none !important; } }
+
+body.is-mobile-preview { background-color: #cbd5e1; display: flex; justify-content: center; align-items: center; padding: 2rem 0; }
+body.is-mobile-preview #app-wrapper { width: 390px; height: 800px; min-height: auto; background-color: var(--bg-color); border: 14px solid #0f172a; border-radius: 40px; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3); transform: translateZ(0); overflow-y: auto; overflow-x: hidden; position: relative; }
+body.is-mobile-preview #app-wrapper::-webkit-scrollbar { width: 6px; }
+body.is-mobile-preview #app-wrapper::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+body.is-mobile-preview main { margin-left: 0; padding: 1.25rem; padding-top: 5.5rem; }
+body.is-mobile-preview .mobile-header { display: flex; position: absolute; top: 0; left: 0; width: 100%; }
+body.is-mobile-preview aside { position: absolute; left: -var(--sidebar-width); height: 100%; z-index: 120; }
+body.is-mobile-preview aside.open { left: 0; box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
+body.is-mobile-preview .resizer { display: none; }
+body.is-mobile-preview .sidebar-overlay { position: absolute; }
+body.is-mobile-preview .modal-overlay { position: absolute; }
+body.is-mobile-preview .chapter-header { padding: 1.5rem; border-radius: 20px; }
+body.is-mobile-preview .chapter-header h1 { font-size: 1.6rem; }
+body.is-mobile-preview .formulas-container { grid-template-columns: 1fr; }
+body.is-mobile-preview .example-main { flex-direction: column-reverse; gap: 1rem; }
+body.is-mobile-preview .example-diagram { width: 100%; height: 180px; }
