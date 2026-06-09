@@ -62,10 +62,14 @@ aside {
     top: 0;
     left: 0;
     height: 100vh;
+    height: 100dvh; /* Dynamic viewport - tính cả thanh địa chỉ trình duyệt */
     overflow-y: auto;
+    overflow-x: hidden;
     z-index: 100;
     padding: 2rem 1rem;
     transition: var(--transition);
+    -webkit-overflow-scrolling: touch; /* Cuộn mượt trên iOS */
+    overscroll-behavior: contain;
 }
 
 .resizer {
@@ -283,12 +287,17 @@ mjx-container {
     :root { --sidebar-width: 280px; }
     .resizer { display: none; }
     
-    /* \u1ea8n ho\u00e0n to\u00e0n sidebar khi t\u1ea3i trang - kh\u00f4ng hi\u1ec7u \u1ee9ng flash */
+    /* Ẩn hoàn toàn sidebar khi tải trang - không hiệu ứng flash */
     aside {
         left: calc(-1 * var(--sidebar-width));
         box-shadow: none;
         z-index: 120;
         visibility: hidden;
+        /* Fix chiều cao cho iOS Safari */
+        height: 100vh;
+        height: 100dvh;
+        height: -webkit-fill-available;
+        padding-bottom: 4rem; /* Đảm bảo chương cuối không bị cắt */
     }
     aside.open {
         left: 0;
