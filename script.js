@@ -322,7 +322,7 @@ function showChapter(id) {
             <h2>📌 Trọng tâm kiến thức</h2>
             <div class="key-points-grid">
                 ${chapter.key_points.map(point => `
-                    <div class="key-point-card">${point}</div>
+                    <div class="key-point-card"><div class="key-point-body">${point}</div></div>
                 `).join('')}
             </div>
         </section>
