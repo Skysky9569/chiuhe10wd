@@ -283,10 +283,20 @@ mjx-container {
     :root { --sidebar-width: 280px; }
     .resizer { display: none; }
     
-    aside { left: calc(-1 * var(--sidebar-width)); box-shadow: 5px 0 25px rgba(0,0,0,0.15); z-index: 120; }
-    aside.open { left: 0; }
+    /* \u1ea8n ho\u00e0n to\u00e0n sidebar khi t\u1ea3i trang - kh\u00f4ng hi\u1ec7u \u1ee9ng flash */
+    aside {
+        left: calc(-1 * var(--sidebar-width));
+        box-shadow: none;
+        z-index: 120;
+        visibility: hidden;
+    }
+    aside.open {
+        left: 0;
+        visibility: visible;
+        box-shadow: 5px 0 25px rgba(0,0,0,0.15);
+    }
 
-    /* Hiện nút đóng sidebar ở góc logo trên mobile */
+    /* Hi\u1ec7n n\u00fat \u0111\u00f3ng sidebar \u1edf g\u00f3c logo tr\u00ean mobile */
     .close-sidebar-btn {
         display: flex;
     }

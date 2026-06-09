@@ -279,6 +279,11 @@ async function callGeminiAPI(prompt, systemInstruction = "", schema = null) {
 
 function init() {
     renderSidebar();
+    // Ẩn sidebar mặc định ngay khi tải trang trên mobile
+    if (window.innerWidth <= 768) {
+        document.getElementById('sidebar').classList.remove('open');
+        document.body.classList.remove('sidebar-open');
+    }
     showChapter(1);
 }
 
