@@ -279,7 +279,7 @@ mjx-container, svg {
     :root { --sidebar-width: 280px; }
     .resizer { display: none; }
     
-    aside { left: -var(--sidebar-width); box-shadow: 5px 0 25px rgba(0,0,0,0.15); z-index: 120; }
+    aside { left: calc(-1 * var(--sidebar-width)); box-shadow: 5px 0 25px rgba(0,0,0,0.15); z-index: 120; }
     aside.open { left: 0; }
 
     /* Hiện nút đóng sidebar ở góc logo trên mobile */
@@ -326,7 +326,7 @@ body.is-mobile-preview #app-wrapper::-webkit-scrollbar { width: 6px; }
 body.is-mobile-preview #app-wrapper::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
 body.is-mobile-preview main { margin-left: 0; padding: 1.25rem; padding-top: 5.5rem; }
 body.is-mobile-preview .mobile-header { display: flex; position: absolute; top: 0; left: 0; width: 100%; }
-body.is-mobile-preview aside { position: absolute; left: -var(--sidebar-width); height: 100%; z-index: 120; }
+body.is-mobile-preview aside { position: absolute; left: calc(-1 * var(--sidebar-width)); height: 100%; z-index: 120; }
 body.is-mobile-preview aside.open { left: 0; box-shadow: 5px 0 15px rgba(0,0,0,0.1); }
 body.is-mobile-preview .resizer { display: none; }
 body.is-mobile-preview .sidebar-overlay { position: absolute; }
