@@ -1,0 +1,1040 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sổ tay Toán 11 📐</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            },
+            options: {
+                enableMenu: false 
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <style>
+        :root {
+            --bg-color: #fcf9f7;
+            --sidebar-bg: #ffffff;
+            --text-main: #37352f;
+            --text-sub: #6b7280;
+            --accent-color: #6366f1;
+            --accent-soft: #e0e7ff;
+            --sidebar-width: 280px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Be Vietnam Pro', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- Sidebar Styles --- */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--sidebar-bg);
+            border-right: 1px solid #eee;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+            padding: 2rem 1rem;
+            transition: var(--transition);
+        }
+
+        /* --- Thêm style cho thanh kéo (resizer) --- */
+        .resizer {
+            position: absolute;
+            top: 0;
+            right: 0; 
+            width: 6px;
+            height: 100%;
+            cursor: col-resize;
+            background-color: transparent;
+            transition: background-color 0.2s;
+            z-index: 101;
+        }
+
+        .resizer:hover, body.is-resizing .resizer {
+            background-color: var(--accent-color);
+        }
+
+        /* Tắt hiệu ứng chuyển động khi đang kéo để không bị delay/giật */
+        body.is-resizing aside,
+        body.is-resizing main {
+            transition: none !important;
+        }
+
+        /* Tránh tình trạng vô tình bôi đen chữ khi đang kéo */
+        body.is-resizing {
+            cursor: col-resize;
+            user-select: none;
+        }
+        /* --- Kết thúc style resizer --- */
+
+        .logo {
+            padding: 0 1rem 2rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--accent-color);
+        }
+
+        .nav-item {
+            list-style: none;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: var(--radius);
+            cursor: pointer;
+            display: flex;
+            align-items: center; /* Sửa: Đảm bảo icon và chữ căn giữa dọc */
+            gap: 12px;
+            font-weight: 500;
+            font-size: 0.95rem; /* Sửa: Size chữ vừa vặn hơn */
+            line-height: 1.4; /* Sửa: Khoảng cách dòng khi chữ rớt dòng */
+            color: var(--text-sub);
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background: #f3f4f6;
+            color: var(--text-main);
+            transform: translateX(4px);
+        }
+
+        .nav-item.active {
+            background: var(--accent-soft);
+            color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        .nav-item .chapter-icon {
+            font-size: 1.2rem;
+            flex-shrink: 0; /* Sửa: Icon không bị bóp méo khi chữ dài */
+        }
+
+        /* --- Main Content Styles --- */
+        main {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 3rem;
+            max-width: 1000px; /* Giới hạn độ rộng để dễ đọc */
+            margin-right: auto;
+            transition: var(--transition);
+        }
+
+        .chapter-header {
+            margin-bottom: 3rem;
+            padding: 3rem;
+            border-radius: 24px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .chapter-header h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+            margin-top: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .chapter-header .chapter-icon-lg {
+            font-size: 3.5rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .illustration {
+            position: absolute;
+            right: -20px;
+            bottom: -20px;
+            opacity: 0.2;
+            width: 250px;
+            height: auto;
+            color: white;
+            pointer-events: none;
+        }
+
+        section {
+            margin-bottom: 3.5rem;
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1f2937;
+        }
+
+        /* --- Trọng tâm --- */
+        .key-points-grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .key-point-card {
+            background: white;
+            padding: 1.25rem 1.5rem;
+            border-radius: var(--radius);
+            border: 1px solid #f3f4f6;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            display: flex;
+            align-items: flex-start; /* Sửa: Căn icon lên trên cùng ngang dòng đầu tiên */
+            gap: 12px;
+            font-size: 1rem;
+        }
+
+        .key-point-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--accent-soft);
+        }
+
+        .key-point-card::before {
+            content: "✨";
+            flex-shrink: 0; /* Sửa: Không bóp méo icon */
+            margin-top: 2px; /* Sửa: Tinh chỉnh cho cân đối với chiều cao chữ */
+            font-size: 1.1rem;
+        }
+
+        /* --- Công thức --- */
+        .formulas-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .formula-pill {
+            background: white;
+            border: 1px solid #e5e7eb;
+            padding: 1.25rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: flex-start; /* Sửa: Căn nút copy lên góc trên cùng */
+            justify-content: space-between;
+            gap: 15px;
+            transition: var(--transition);
+        }
+
+        .formula-pill:hover {
+            border-color: var(--accent-color);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .formula-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow-x: auto; /* Cuộn ngang nếu công thức quá dài */
+            padding-bottom: 5px; /* Để scrollbar không dính vào chữ */
+        }
+
+        /* Custom scrollbar cho công thức */
+        .formula-info::-webkit-scrollbar { height: 4px; }
+        .formula-info::-webkit-scrollbar-track { background: transparent; }
+        .formula-info::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+
+        .formula-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            background: var(--accent-soft);
+            padding: 4px 10px;
+            border-radius: 6px;
+            width: fit-content;
+        }
+
+        .formula-text {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            user-select: none;
+            min-height: 28px; /* Sửa: Tạo khoảng trống để render phân số tốt hơn */
+            display: flex;
+            align-items: center;
+        }
+
+        .copy-btn {
+            background: #f3f4f6;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            color: var(--text-sub);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-soft);
+            color: var(--accent-color);
+        }
+
+        .copy-btn.copied {
+            background: #d1fae5;
+            color: #10b981;
+            animation: pulse 0.5s ease-out;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Ví dụ --- */
+        .example-card {
+            background: white;
+            border-radius: 16px;
+            border-left: 6px solid var(--accent-color);
+            padding: 1.75rem;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .example-main {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .example-content {
+            flex: 1;
+        }
+
+        .example-diagram {
+            width: 160px;
+            height: 160px;
+            background: var(--bg-color);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            color: var(--accent-color);
+            flex-shrink: 0;
+        }
+
+        .example-problem {
+            font-weight: 600;
+            font-size: 1.05rem;
+            margin-bottom: 1.25rem;
+            color: #111827;
+        }
+
+        .example-solution-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-color);
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            user-select: none;
+            padding: 8px 16px;
+            background: var(--bg-color);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        
+        .example-solution-toggle:hover {
+            background: var(--accent-soft);
+        }
+
+        .example-solution-content {
+            margin-top: 0.5rem;
+            padding: 1.25rem;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #f3f4f6;
+            display: none;
+            font-size: 0.95rem;
+        }
+
+        /* --- Bài học --- */
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        .lesson-card {
+            background: white;
+            padding: 1.25rem;
+            border-radius: var(--radius);
+            border: 1px solid #f3f4f6;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: var(--transition);
+        }
+
+        .lesson-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .lesson-icon-sm {
+            width: 36px;
+            height: 36px;
+            padding: 7px;
+            border-radius: 10px;
+            background: var(--accent-soft);
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lesson-text {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #374151;
+            line-height: 1.4;
+        }
+
+        /* --- Mobile Header & Responsive --- */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            z-index: 110;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+
+        .hamburger {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #f3f4f6;
+            border: none;
+            border-radius: 8px;
+            color: #374151;
+        }
+
+        .mobile-header .logo {
+            padding: 0;
+            margin: 0;
+        }
+
+        @media (max-width: 1024px) {
+            main { padding: 2.5rem; }
+        }
+
+        @media (max-width: 768px) {
+            .resizer { display: none; } /* Ẩn thanh kéo trên giao diện điện thoại */
+            
+            aside {
+                left: -var(--sidebar-width);
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            }
+
+            aside.open { left: 0; }
+
+            main {
+                margin-left: 0;
+                padding: 1.25rem;
+                padding-top: 5.5rem; /* Space for mobile header */
+            }
+
+            .mobile-header { display: flex; }
+
+            .chapter-header {
+                padding: 1.75rem;
+                border-radius: 20px;
+            }
+
+            .chapter-header h1 { font-size: 1.75rem; }
+            .chapter-header .chapter-icon-lg { font-size: 2.5rem; }
+
+            .formulas-container { grid-template-columns: 1fr; }
+
+            .example-main {
+                flex-direction: column-reverse;
+                gap: 1.5rem;
+            }
+            .example-diagram {
+                width: 100%;
+                height: 180px;
+            }
+
+            .illustration {
+                width: 180px;
+                right: -10px;
+                bottom: -10px;
+            }
+        }
+
+        /* SVG Icons utility */
+        .svg-icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <header class="mobile-header">
+        <div class="logo">📐 Toán 11 Chiu</div>
+        <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+    </header>
+
+    <aside id="sidebar">
+        <div class="logo">📐 Toán 11 Chiu</div>
+        <ul id="chapter-list">
+            <!-- Sidebar items will be injected here -->
+        </ul>
+        <div class="resizer" id="dragMe" title="Kéo để thay đổi độ rộng"></div>
+    </aside>
+
+    <main id="content">
+        <!-- Content will be injected here -->
+    </main>
+
+    <script>
+        // Data Fallback (LaTeX Enhanced)
+        const fallbackData = {
+  "chapters": [
+    {
+      "id": 1,
+      "title": "Hàm số lượng giác và phương trình lượng giác",
+      "icon": "📐",
+      "color": "#6366F1",
+      "lessons": [
+        "Bài 1. Giá trị lượng giác của góc lượng giác",
+        "Bài 2. Công thức lượng giác",
+        "Bài 3. Hàm số lượng giác",
+        "Bài 4. Phương trình lượng giác cơ bản"
+      ],
+      "key_points": [
+        "Nắm vững khái niệm góc lượng giác, số đo góc (độ và radian), đường tròn lượng giác và các hệ thức lượng giác cơ bản.",
+        "Thành thạo các phép biến đổi lượng giác: công thức cộng, công thức nhân đôi, công thức biến đổi tích thành tổng và tổng thành tích.",
+        "Hiểu rõ tập xác định, tập giá trị, tính chẵn lẻ, chu kì tuần hoàn và đồ thị của 4 hàm số lượng giác cơ bản: $\\sin, \\cos, \\tan, \\cot$.",
+        "Biết cách giải và biểu diễn nghiệm của các phương trình lượng giác cơ bản: $\\sin x = m, \\cos x = m, \\tan x = m, \\cot x = m$."
+      ],
+      "formulas": [
+        {"name": "Hệ thức Chasles", "formula": "sđ(Ou, Ov) + sđ(Ov, Ow) = sđ(Ou, Ow) + k360^\\circ"},
+        {"name": "Hằng đẳng thức 1", "formula": "\\sin^2\\alpha + \\cos^2\\alpha = 1"},
+        {"name": "Hằng đẳng thức 2", "formula": "1 + \\tan^2\\alpha = \\frac{1}{\\cos^2\\alpha}"},
+        {"name": "Công thức cộng", "formula": "\\cos(a \\pm b) = \\cos a \\cos b \\mp \\sin a \\sin b"},
+        {"name": "Công thức nhân đôi", "formula": "\\sin 2a = 2\\sin a \\cos a"},
+        {"name": "PT sinx = m", "formula": "x = \\alpha + k2\\pi \\lor x = \\pi - \\alpha + k2\\pi"}
+      ],
+      "example": {
+        "problem": "Tính các giá trị lượng giác của góc $\\alpha$, biết: $\\sin \\alpha = \\frac{3}{5}$ và $90^\\circ < \\alpha < 180^\\circ$.",
+        "solution": "Vì $90^\\circ < \\alpha < 180^\\circ$ nên $\\cos \\alpha < 0$.<br><br>Từ $\\sin^2\\alpha + \\cos^2\\alpha = 1$ suy ra $\\cos \\alpha = -\\sqrt{1 - \\sin^2\\alpha} = -\\sqrt{1 - \\frac{9}{25}} = -\\frac{4}{5}$.<br><br>Do đó $\\tan \\alpha = \\frac{\\sin\\alpha}{\\cos\\alpha} = -\\frac{3}{4}$ và $\\cot \\alpha = -\\frac{4}{3}$."
+      }
+    },
+    {
+      "id": 2,
+      "title": "Dãy số. Cấp số cộng và cấp số nhân",
+      "icon": "🔢",
+      "color": "#10B981",
+      "lessons": [
+        "Bài 5. Dãy số",
+        "Bài 6. Cấp số cộng",
+        "Bài 7. Cấp số nhân"
+      ],
+      "key_points": [
+        "Nhận biết khái niệm dãy số vô hạn, hữu hạn, dãy số tăng, giảm, bị chặn và các cách cho dãy số.",
+        "Nắm vững định nghĩa, công sai của cấp số cộng và công bội của cấp số nhân.",
+        "Áp dụng thành thạo công thức số hạng tổng quát và tổng $n$ số hạng đầu tiên."
+      ],
+      "formulas": [
+        {"name": "Định nghĩa CSC", "formula": "u_n = u_{n-1} + d"},
+        {"name": "SHTQ Cấp số cộng", "formula": "u_n = u_1 + (n-1)d"},
+        {"name": "Tổng n số hạng CSC", "formula": "S_n = \\frac{n}{2}[2u_1 + (n-1)d]"},
+        {"name": "Định nghĩa CSN", "formula": "u_n = u_{n-1} \\cdot q"},
+        {"name": "SHTQ Cấp số nhân", "formula": "u_n = u_1 \\cdot q^{n-1}"},
+        {"name": "Tổng n số hạng CSN", "formula": "S_n = u_1\\frac{1 - q^n}{1 - q}"}
+      ],
+      "example": {
+        "problem": "Số hạng thứ 10 của một CSC bằng $48$ và số hạng thứ 18 bằng $88$. Tìm số hạng thứ 100.",
+        "solution": "Ta có hệ phương trình:<br>$u_{10} = u_1 + 9d = 48$<br>$u_{18} = u_1 + 17d = 88$<br><br>Giải hệ suy ra $u_1 = 3, d = 5$.<br><br>Vậy số hạng thứ 100 là: $u_{100} = u_1 + 99d = 3 + 99\\cdot5 = 498$."
+      }
+    },
+    {
+      "id": 3,
+      "title": "Số đặc trưng đo xu thế trung tâm",
+      "icon": "📊",
+      "color": "#F59E0B",
+      "lessons": [
+        "Bài 8. Mẫu số liệu ghép nhóm",
+        "Bài 9. Các số đặc trưng đo xu thế trung tâm"
+      ],
+      "key_points": [
+        "Biết cách đọc, giải thích và chuyển đổi dữ liệu rời rạc thành mẫu số liệu ghép nhóm.",
+        "Nắm vững quy trình và công thức tính số trung bình, trung vị, tứ phân vị và mốt.",
+        "Hiểu ý nghĩa thực tiễn, ưu nhược điểm và vai trò đại diện của từng số đặc trưng."
+      ],
+      "formulas": [
+        {"name": "Số trung bình", "formula": "\\bar{x} = \\frac{m_1x_1 + \\dots + m_kx_k}{n}"},
+        {"name": "Trung vị", "formula": "M_e = a_p + \\left(\\frac{\\frac{n}{2} - cf_{p-1}}{m_p}\\right) \\cdot h"},
+        {"name": "Tứ phân vị Q1", "formula": "Q_1 = a_p + \\left(\\frac{\\frac{n}{4} - cf_{p-1}}{m_p}\\right) \\cdot h"},
+        {"name": "Mốt", "formula": "M_o = a_j + \\left(\\frac{d_1}{d_1 + d_2}\\right) \\cdot h"}
+      ],
+      "example": {
+        "problem": "Khái niệm Mốt (Mode) của mẫu số liệu ghép nhóm là gì?",
+        "solution": "Mốt của mẫu số liệu ghép nhóm là giá trị đại diện cho nhóm có tần số lớn nhất (nhóm chứa mốt). Nó được ước lượng dựa trên tần số của nhóm chứa mốt và các nhóm lân cận."
+      }
+    },
+    {
+      "id": 4,
+      "title": "Quan hệ song song trong không gian",
+      "icon": "🔲",
+      "color": "#8B5CF6",
+      "lessons": [
+        "Bài 10. Đường thẳng và mặt phẳng",
+        "Bài 11. Hai đường thẳng song song",
+        "Bài 12. Đường thẳng và mặt phẳng //",
+        "Bài 13. Hai mặt phẳng song song",
+        "Bài 14. Phép chiếu song song"
+      ],
+      "key_points": [
+        "Xác định quan hệ liên thuộc; tìm giao điểm, giao tuyến.",
+        "Phân biệt và chứng minh vị trí tương đối: chéo nhau, song song, cắt nhau.",
+        "Nắm vững điều kiện và tính chất về quan hệ song song; áp dụng Định lí Thalès.",
+        "Nhận diện hình khối và dùng phép chiếu song song để vẽ hình biểu diễn."
+      ],
+      "formulas": [
+        {"name": "3 giao tuyến", "formula": "\\text{3 mp cắt nhau } \\to \\text{3 giao tuyến đồng quy hoặc //}"},
+        {"name": "Đường // Mặt", "formula": "a \\not\\subset (P), a \\parallel b, b \\subset (P) \\implies a \\parallel (P)"},
+        {"name": "Mặt // Mặt", "formula": "(\\alpha) \\text{ chứa } a \\cap b, a \\parallel (\\beta), b \\parallel (\\beta) \\implies (\\alpha) \\parallel (\\beta)"},
+        {"name": "Định lí Thalès", "formula": "\\frac{AB}{A'B'} = \\frac{BC}{B'C'} = \\frac{AC}{A'C'}"}
+      ],
+      "example": {
+        "problem": "Cho hình chóp $S.ABCD$ có đáy $ABCD$ là hình bình hành. Xác định giao tuyến của $(SAB)$ và $(SCD)$.",
+        "solution": "Hai mặt phẳng $(SAB)$ và $(SCD)$ có điểm chung là $S$.<br><br>Đồng thời chúng chứa hai đường thẳng song song là $AB \\parallel CD$.<br><br>Vậy giao tuyến là đường thẳng $d$ đi qua $S$ và song song với $AB$ (và $CD$)."
+      }
+    },
+    {
+      "id": 5,
+      "title": "Giới hạn. Hàm số liên tục",
+      "icon": "♾️",
+      "color": "#06B6D4",
+      "lessons": [
+        "Bài 15. Giới hạn của dãy số",
+        "Bài 16. Giới hạn của hàm số",
+        "Bài 17. Hàm số liên tục"
+      ],
+      "key_points": [
+        "Nắm vững khái niệm giới hạn hữu hạn, giới hạn vô cực của dãy số và hàm số.",
+        "Sử dụng các quy tắc và phép toán giới hạn (tổng, hiệu, tích, thương) để tính.",
+        "Nhận biết cấp số nhân lùi vô hạn và áp dụng công thức.",
+        "Hiểu khái niệm hàm số liên tục tại một điểm, trên một khoảng/đoạn."
+      ],
+      "formulas": [
+        {"name": "Giới hạn cơ bản 1", "formula": "\\lim \\frac{1}{n^k} = 0 \\; (k > 0)"},
+        {"name": "Giới hạn cơ bản 2", "formula": "\\lim q^n = 0 \\; (|q| < 1)"},
+        {"name": "Tổng CSN lùi vô hạn", "formula": "S = \\frac{u_1}{1 - q} \\; (|q| < 1)"},
+        {"name": "Liên tục tại 1 điểm", "formula": "\\lim_{x \\to x_0} f(x) = f(x_0)"}
+      ],
+      "example": {
+        "problem": "Tính tổng $S = 1 - \\frac{1}{2} + \\frac{1}{4} - \\frac{1}{8} + \\dots$ (CSN lùi vô hạn)",
+        "solution": "Dãy số trên là một cấp số nhân lùi vô hạn với số hạng đầu $u_1 = 1$ và công bội $q = -\\frac{1}{2}$ (thỏa mãn $|q| < 1$).<br><br>Áp dụng công thức tính tổng: $S = \\frac{u_1}{1 - q} = \\frac{1}{1 - (-\\frac{1}{2})} = \\frac{1}{\\frac{3}{2}} = \\frac{2}{3}$."
+      }
+    },
+    {
+      "id": 6,
+      "title": "Hàm số mũ và hàm số lôgarit",
+      "icon": "🧮",
+      "color": "#EF4444",
+      "lessons": [
+        "Bài 18. Luỹ thừa với số mũ thực",
+        "Bài 19. Lôgarit",
+        "Bài 20. Hàm số mũ và lôgarit",
+        "Bài 21. Phương trình mũ, lôgarit"
+      ],
+      "key_points": [
+        "Nắm vững khái niệm và tính chất của luỹ thừa.",
+        "Hiểu rõ khái niệm lôgarit, quy tắc tính và công thức đổi cơ số.",
+        "Phân tích tập xác định, sự biến thiên, tập giá trị của hàm số mũ, lôgarit.",
+        "Giải phương trình, bất phương trình cơ bản."
+      ],
+      "formulas": [
+        {"name": "Tính chất luỹ thừa", "formula": "a^m \\cdot a^n = a^{m+n}; \\; (a^m)^n = a^{mn}"},
+        {"name": "Định nghĩa Lôgarit", "formula": "\\log_a M = \\alpha \\iff a^\\alpha = M"},
+        {"name": "Log của Tích", "formula": "\\log_a(MN) = \\log_a M + \\log_a N"},
+        {"name": "Đổi cơ số", "formula": "\\log_a b = \\frac{\\log_c b}{\\log_c a}"},
+        {"name": "PT Mũ cơ bản", "formula": "a^x = b \\iff x = \\log_a b"}
+      ],
+      "example": {
+        "problem": "Giải phương trình: $3^{x+1} = \\frac{1}{3^{1-2x}}$",
+        "solution": "Biến đổi phương trình:<br>$3^{x+1} = 3^{-(1-2x)}$<br>$\\iff 3^{x+1} = 3^{2x-1}$<br><br>Do cơ số $3 > 1$, ta có:<br>$x + 1 = 2x - 1 \\iff x = 2$.<br>Vậy tập nghiệm $S = \\{2\\}$."
+      }
+    },
+    {
+      "id": 7,
+      "title": "Quan hệ vuông góc trong không gian",
+      "icon": "📐",
+      "color": "#EC4899",
+      "lessons": [
+        "Bài 22. Hai đường thẳng vuông góc",
+        "Bài 23. Đường thẳng vuông góc mặt phẳng",
+        "Bài 24. Góc giữa đường và mặt",
+        "Bài 25. Hai mặt phẳng vuông góc",
+        "Bài 26. Khoảng cách",
+        "Bài 27. Thể tích"
+      ],
+      "key_points": [
+        "Chứng minh quan hệ vuông góc: đường vuông góc đường, đường vuông góc mặt, mặt vuông góc mặt.",
+        "Xác định và tính góc giữa đường và mặt, góc nhị diện.",
+        "Tính khoảng cách từ điểm đến mặt phẳng, khoảng cách hai đường chéo nhau.",
+        "Công thức thể tích khối lăng trụ, chóp, chóp cụt."
+      ],
+      "formulas": [
+        {"name": "ĐL 3 đường vuông góc", "formula": "b \\perp a \\iff b \\perp a'"},
+        {"name": "ĐK đường vuông góc mặt", "formula": "d \\perp a, d \\perp b, a \\cap b \\subset (P) \\implies d \\perp (P)"},
+        {"name": "Thể tích lăng trụ", "formula": "V = S \\cdot h"},
+        {"name": "Thể tích khối chóp", "formula": "V = \\frac{1}{3} S \\cdot h"}
+      ],
+      "example": {
+        "problem": "Tứ diện $OABC$ có $OA, OB, OC$ đôi một vuông góc, $OA=a, OB=b, OC=c$. Tính thể tích khối tứ diện.",
+        "solution": "Vì $OA, OB, OC$ đôi một vuông góc nên $OA \\perp (OBC)$.<br>Do đó, $OA$ là đường cao của tứ diện ứng với đáy là tam giác vuông $OBC$.<br><br>Diện tích đáy: $S_{OBC} = \\frac{1}{2}OB \\cdot OC = \\frac{1}{2}bc$.<br>Thể tích: $V = \\frac{1}{3} S_{OBC} \\cdot OA = \\frac{1}{6}abc$."
+      }
+    },
+    {
+      "id": 8,
+      "title": "Các quy tắc tính xác suất",
+      "icon": "🎲",
+      "color": "#14B8A6",
+      "lessons": [
+        "Bài 28. Biến cố hợp, giao, độc lập",
+        "Bài 29. Công thức cộng xác suất",
+        "Bài 30. Công thức nhân xác suất"
+      ],
+      "key_points": [
+        "Nhận biết các khái niệm biến cố hợp, biến cố giao, độc lập, xung khắc.",
+        "Tính xác suất biến cố hợp bằng công thức cộng.",
+        "Tính xác suất biến cố giao bằng công thức nhân và sơ đồ hình cây."
+      ],
+      "formulas": [
+        {"name": "Biến cố xung khắc", "formula": "P(A \\cup B) = P(A) + P(B)"},
+        {"name": "Cộng XS tổng quát", "formula": "P(A \\cup B) = P(A) + P(B) - P(AB)"},
+        {"name": "Nhân XS độc lập", "formula": "P(AB) = P(A) \\cdot P(B)"}
+      ],
+      "example": {
+        "problem": "An thi đậu với xác suất $0.8$, Bình thi đậu với xác suất $0.9$. Việc thi đậu của 2 bạn là độc lập. Tính xác suất cả hai cùng thi đậu.",
+        "solution": "Gọi $A$ là biến cố \"An thi đậu\", $P(A) = 0.8$.<br>Gọi $B$ là biến cố \"Bình thi đậu\", $P(B) = 0.9$.<br><br>Vì $A$ và $B$ độc lập, xác suất cả hai thi đậu (biến cố giao $AB$) là:<br>$P(AB) = P(A) \\cdot P(B) = 0.8 \\times 0.9 = 0.72$."
+      }
+    },
+    {
+      "id": 9,
+      "title": "Đạo hàm",
+      "icon": "📈",
+      "color": "#F97316",
+      "lessons": [
+        "Bài 31. Định nghĩa & Ý nghĩa",
+        "Bài 32. Quy tắc tính đạo hàm",
+        "Bài 33. Đạo hàm cấp hai"
+      ],
+      "key_points": [
+        "Hiểu ý nghĩa hình học (phương trình tiếp tuyến) và vật lý (vận tốc tức thời).",
+        "Vận dụng quy tắc tính đạo hàm tổng, hiệu, tích, thương, hàm hợp.",
+        "Thuộc bảng đạo hàm hàm sơ cấp cơ bản.",
+        "Nhận biết đạo hàm cấp hai (gia tốc tức thời)."
+      ],
+      "formulas": [
+        {"name": "Định nghĩa đạo hàm", "formula": "f'(x_0) = \\lim_{x \\to x_0} \\frac{f(x) - f(x_0)}{x - x_0}"},
+        {"name": "PT Tiếp tuyến", "formula": "y = f'(x_0)(x - x_0) + y_0"},
+        {"name": "Đạo hàm của Tích", "formula": "(uv)' = u'v + uv'"},
+        {"name": "Đạo hàm của Thương", "formula": "\\left(\\frac{u}{v}\\right)' = \\frac{u'v - uv'}{v^2}"},
+        {"name": "Hàm hợp cơ bản", "formula": "\\left(u^n\\right)' = n \\cdot u^{n-1} \\cdot u'"}
+      ],
+      "example": {
+        "problem": "Tính đạo hàm của hàm số $y = \\sin(2x + \\frac{\\pi}{4})$.",
+        "solution": "Áp dụng công thức đạo hàm hàm số hợp $(\\sin u)' = u' \\cdot \\cos u$, với $u = 2x + \\frac{\\pi}{4}$.<br><br>$y' = \\left(2x + \\frac{\\pi}{4}\\right)' \\cdot \\cos\\left(2x + \\frac{\\pi}{4}\\right)$<br><br>$y' = 2\\cos\\left(2x + \\frac{\\pi}{4}\\right)$."
+      }
+    }
+  ]
+};
+
+        const illustrations = [
+            '<svg class="illustration" viewBox="0 0 100 40"><path d="M0 20 Q 25 0, 50 20 T 100 20" fill="none" stroke="currentColor" stroke-width="2"/></svg>',
+            '<svg class="illustration" viewBox="0 0 100 40"><circle cx="10" cy="30" r="3" fill="currentColor"/><circle cx="30" cy="25" r="3" fill="currentColor"/><circle cx="50" cy="20" r="3" fill="currentColor"/><circle cx="70" cy="15" r="3" fill="currentColor"/><circle cx="90" cy="10" r="3" fill="currentColor"/></svg>',
+            '<svg class="illustration" viewBox="0 0 100 40"><rect x="10" y="20" width="10" height="20" fill="currentColor"/><rect x="30" y="10" width="10" height="30" fill="currentColor"/><rect x="50" y="25" width="10" height="15" fill="currentColor"/><rect x="70" y="5" width="10" height="35" fill="currentColor"/><rect x="90" y="15" width="10" height="25" fill="currentColor"/></svg>',
+            '<svg class="illustration" viewBox="0 0 100 40"><path d="M20 30 L50 30 L60 10 L30 10 Z" fill="none" stroke="currentColor" stroke-width="1.5"/><line x1="40" y1="20" x2="40" y2="5" stroke="currentColor" stroke-width="1.5"/></svg>',
+            '<svg class="illustration" viewBox="0 0 100 40"><path d="M10 20 L90 20 M80 15 L90 20 L80 25" fill="none" stroke="currentColor" stroke-width="2"/><text x="35" y="38" font-size="10" fill="currentColor" font-weight="bold">n → ∞</text></svg>',
+            '<svg class="illustration" viewBox="0 0 100 40"><path d="M10 35 Q 50 35, 90 5" fill="none" stroke="currentColor" stroke-width="2.5"/></svg>',
+            '<svg class="illustration" viewBox="0 0 100 40"><line x1="20" y1="35" x2="80" y2="35" stroke="currentColor" stroke-width="2"/><line x1="50" y1="35" x2="50" y2="5" stroke="currentColor" stroke-width="2"/><rect x="50" y="25" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>',
+            '<svg class="illustration" viewBox="0 0 100 40"><rect x="35" y="5" width="30" height="30" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="42" cy="12" r="2" fill="currentColor"/><circle cx="58" cy="12" r="2" fill="currentColor"/><circle cx="50" cy="20" r="2" fill="currentColor"/><circle cx="42" cy="28" r="2" fill="currentColor"/><circle cx="58" cy="28" r="2" fill="currentColor"/></svg>',
+            '<svg class="illustration" viewBox="0 0 100 40"><path d="M10 35 Q 50 35, 90 5" fill="none" stroke="currentColor" stroke-width="2" opacity="0.2"/><line x1="20" y1="35" x2="80" y2="5" stroke="currentColor" stroke-width="2"/></svg>'
+        ];
+
+        let mathData = fallbackData;
+        let activeChapterId = 1;
+
+        function init() {
+            renderSidebar();
+            showChapter(1);
+        }
+
+        function renderSidebar() {
+            const list = document.getElementById('chapter-list');
+            list.innerHTML = mathData.chapters.map(ch => `
+                <li class="nav-item ${ch.id === activeChapterId ? 'active' : ''}" onclick="showChapter(${ch.id})">
+                    <span class="chapter-icon">${ch.icon}</span>
+                    <span class="chapter-title">Chương ${ch.id}</span>
+                </li>
+            `).join('');
+        }
+
+        function getLessonIcon(title) {
+            // Simplified SVG returns for lessons
+            return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>';
+        }
+
+        const exampleIllustrations = [
+            // 1. Lượng giác: Trục Ox, Oy, điểm M phần tư 2 (góc tù), đường gióng sin/cos
+            '<svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" /></marker></defs><path d="M10 60 L110 60" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/><path d="M60 110 L60 10" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow)"/><circle cx="60" cy="60" r="40" stroke="currentColor" stroke-width="1.5" stroke-dasharray="3 3"/><path d="M75 60 A 15 15 0 0 0 45 46" stroke="var(--accent-color)" stroke-width="2"/><text x="65" y="48" font-size="10" fill="var(--accent-color)" font-weight="bold" stroke="none">α</text><line x1="60" y1="60" x2="28" y2="36" stroke="currentColor" stroke-width="2"/><line x1="28" y1="36" x2="28" y2="60" stroke="#EF4444" stroke-width="1.5" stroke-dasharray="2 2"/><line x1="28" y1="36" x2="60" y2="36" stroke="#3B82F6" stroke-width="1.5" stroke-dasharray="2 2"/><circle cx="28" cy="36" r="3" fill="currentColor"/><text x="15" y="32" font-size="10" fill="currentColor" font-weight="bold" stroke="none">M</text><text x="110" y="75" font-size="12" fill="currentColor" stroke="none">x</text><text x="45" y="15" font-size="12" fill="currentColor" stroke="none">y</text><text x="65" y="75" font-size="10" fill="currentColor" stroke="none">O</text></svg>',
+            
+            // 2. Cấp số: Đồ thị biểu diễn các điểm u1, u2, u3 và bước nhảy +d
+            '<svg viewBox="0 0 120 120" fill="none"><defs><marker id="arrow2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" /></marker></defs><polyline points="20,110 20,10" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow2)"/><polyline points="10,100 110,100" stroke="currentColor" stroke-width="1.5" marker-end="url(#arrow2)"/><polyline points="30,85 55,65 80,45 105,25" stroke="var(--accent-color)" stroke-width="1.5" stroke-dasharray="3 3"/><line x1="30" y1="85" x2="55" y2="85" stroke="#EF4444" stroke-width="1" stroke-dasharray="2 2"/><line x1="55" y1="85" x2="55" y2="65" stroke="#EF4444" stroke-width="1" stroke-dasharray="2 2"/><text x="60" y="78" font-size="10" fill="#EF4444" stroke="none">+d</text><circle cx="30" cy="85" r="3" fill="currentColor"/><text x="28" y="115" font-size="10" fill="currentColor" stroke="none">1</text><text x="6" y="88" font-size="10" fill="currentColor" stroke="none">u₁</text><circle cx="55" cy="65" r="3" fill="currentColor"/><text x="53" y="115" font-size="10" fill="currentColor" stroke="none">2</text><text x="6" y="68" font-size="10" fill="currentColor" stroke="none">u₂</text><circle cx="80" cy="45" r="3" fill="currentColor"/><circle cx="105" cy="25" r="3" fill="currentColor"/></svg>',
+            
+            // 3. Thống kê: Biểu đồ Histogram có đường đa giác tần số và điểm Mo
+            '<svg viewBox="0 0 120 120" fill="currentColor"><line x1="15" y1="105" x2="110" y2="105" stroke="currentColor" stroke-width="1.5"/><line x1="15" y1="105" x2="15" y2="10" stroke="currentColor" stroke-width="1.5"/><rect x="25" y="60" width="14" height="45" fill="var(--accent-color)" opacity="0.3"/><rect x="41" y="30" width="14" height="75" fill="var(--accent-color)" opacity="0.5"/><rect x="57" y="15" width="14" height="90" fill="var(--accent-color)" opacity="0.8"/><rect x="73" y="45" width="14" height="60" fill="var(--accent-color)" opacity="0.5"/><rect x="89" y="80" width="14" height="25" fill="var(--accent-color)" opacity="0.3"/><path d="M 32 60 L 48 30 L 64 15 L 80 45 L 96 80" fill="none" stroke="#EF4444" stroke-width="2"/><circle cx="64" cy="15" r="3" fill="#EF4444"/><text x="58" y="10" font-size="10" fill="#EF4444" stroke="none">Mo</text></svg>',
+            
+            // 4. Không gian: Giao tuyến d của 2 mặt phẳng trong không gian 3D
+            '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M60 10 L20 90 L100 90 Z" fill="var(--accent-soft)" opacity="0.5"/><path d="M60 10 L40 100 L100 90" stroke-dasharray="2 2" opacity="0.5"/><line x1="60" y1="10" x2="60" y2="110" stroke="#EF4444" stroke-width="2"/><text x="65" y="15" font-size="10" fill="currentColor" stroke="none">S</text><text x="48" y="118" font-size="10" fill="#EF4444" stroke="none">d (giao tuyến)</text><path d="M20 90 L40 100" stroke-dasharray="3 3"/><line x1="20" y1="90" x2="100" y2="90" stroke-width="2"/><circle cx="60" cy="10" r="2" fill="currentColor"/></svg>',
+            
+            // 5. Giới hạn: Đường cong tiệm cận trục hoành
+            '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor"><line x1="10" y1="90" x2="110" y2="90" stroke-width="1.5"/><line x1="20" y1="110" x2="20" y2="10" stroke-width="1.5"/><path d="M25 20 Q 35 85, 105 88" stroke="var(--accent-color)" stroke-width="2"/><line x1="105" y1="88" x2="110" y2="88" stroke="var(--accent-color)" stroke-width="2" stroke-dasharray="2 2"/><text x="80" y="105" font-size="10" fill="currentColor" stroke="none">n → +∞</text></svg>',
+            
+            // 6. Mũ/Logarit: Hai hàm số đối xứng qua đường thẳng y = x
+            '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor"><line x1="10" y1="110" x2="110" y2="110" stroke-width="1.5"/><line x1="10" y1="110" x2="10" y2="10" stroke-width="1.5"/><line x1="10" y1="110" x2="100" y2="20" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/><path d="M10 105 Q 40 100, 90 20" stroke="#EF4444" stroke-width="2"/><path d="M15 110 Q 20 80, 100 30" stroke="#3B82F6" stroke-width="2"/><text x="95" y="15" font-size="10" fill="#EF4444" stroke="none">aˣ</text><text x="105" y="40" font-size="10" fill="#3B82F6" stroke="none">logₐx</text></svg>',
+            
+            // 7. Vuông góc: Hệ trục tọa độ 3D có ký hiệu góc vuông
+            '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="60" y1="60" x2="60" y2="10"/><line x1="60" y1="60" x2="20" y2="90"/><line x1="60" y1="60" x2="110" y2="70"/><rect x="60" y="50" width="8" height="10" stroke-width="1" transform="skewY(20)"/><path d="M52 66 L52 56 L60 50" stroke-width="1"/><text x="65" y="15" font-size="12" fill="currentColor" stroke="none">z</text><text x="15" y="95" font-size="12" fill="currentColor" stroke="none">x</text><text x="110" y="65" font-size="12" fill="currentColor" stroke="none">y</text><text x="65" y="75" font-size="10" fill="currentColor" stroke="none">O</text></svg>',
+            
+            // 8. Xác suất: Biểu đồ Venn có phần giao được tô đậm (P(AB))
+            '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="10" y="10" width="100" height="90" rx="4"/><circle cx="45" cy="55" r="30" fill="var(--accent-color)" opacity="0.1"/><circle cx="75" cy="55" r="30" fill="#EF4444" opacity="0.1"/><circle cx="45" cy="55" r="30"/><circle cx="75" cy="55" r="30"/><path d="M 60 30 A 30 30 0 0 0 60 80 A 30 30 0 0 0 60 30" fill="var(--accent-color)" opacity="0.5"/><text x="35" y="58" font-size="12" fill="currentColor" stroke="none">A</text><text x="80" y="58" font-size="12" fill="currentColor" stroke="none">B</text></svg>',
+            
+            // 9. Đạo hàm: Tiếp tuyến tại một điểm và minh họa dY/dX
+            '<svg viewBox="0 0 120 120" fill="none" stroke="currentColor"><path d="M10 90 Q 50 10, 110 50" stroke-width="2"/><circle cx="60" cy="40" r="3" fill="#EF4444" stroke="none"/><line x1="20" y1="10" x2="100" y2="70" stroke="#EF4444" stroke-width="1.5"/><line x1="60" y1="40" x2="60" y2="70" stroke-width="1" stroke-dasharray="2 2"/><line x1="60" y1="70" x2="100" y2="70" stroke-width="1" stroke-dasharray="2 2"/><text x="75" y="82" font-size="10" fill="currentColor" stroke="none">Δx</text><text x="42" y="60" font-size="10" fill="currentColor" stroke="none">Δy</text></svg>'
+        ];
+
+        function showChapter(id) {
+            activeChapterId = id;
+            const chapter = mathData.chapters.find(ch => ch.id === id);
+            const content = document.getElementById('content');
+            
+            document.querySelectorAll('.nav-item').forEach((item, index) => {
+                item.classList.toggle('active', (index + 1) === id);
+            });
+
+            document.documentElement.style.setProperty('--accent-color', chapter.color);
+            document.documentElement.style.setProperty('--accent-soft', `${chapter.color}22`);
+
+            content.innerHTML = `
+                <div class="chapter-header" style="background: linear-gradient(135deg, ${chapter.color}, ${chapter.color}dd)">
+                    <span class="chapter-icon-lg">${chapter.icon}</span>
+                    <h1>Chương ${chapter.id}. ${chapter.title}</h1>
+                    ${illustrations[id-1]}
+                </div>
+
+                <section>
+                    <h2>📌 Trọng tâm kiến thức</h2>
+                    <div class="key-points-grid">
+                        ${chapter.key_points.map(point => `
+                            <div class="key-point-card">${point}</div>
+                        `).join('')}
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📐 Bảng Công thức</h2>
+                    <div class="formulas-container">
+                        ${chapter.formulas.map(f => `
+                            <div class="formula-pill">
+                                <div class="formula-info">
+                                    <div class="formula-name">${f.name}</div>
+                                    <div class="formula-text">$${f.formula}$</div>
+                                </div>
+                                <button class="copy-btn" onclick="copyFormula(this, '${f.formula.replace(/'/g, "\\'")}')" title="Copy Text">
+                                    <svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+
+                <section>
+                    <h2>💡 Ví dụ minh họa</h2>
+                    <div class="example-card">
+                        <div class="example-main">
+                            <div class="example-content">
+                                <div class="example-problem">${chapter.example.problem}</div>
+                                <div class="example-solution-toggle" onclick="toggleSolution(this)">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <span>Xem lời giải</span>
+                                </div>
+                                <div class="example-solution-content">
+                                    ${chapter.example.solution}
+                                </div>
+                            </div>
+                            <div class="example-diagram">
+                                ${exampleIllustrations[id-1]}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h2>📚 Danh sách bài học</h2>
+                    <div class="lessons-grid">
+                        ${chapter.lessons.map(lesson => `
+                            <div class="lesson-card">
+                                <div class="lesson-icon-sm">${getLessonIcon(lesson)}</div>
+                                <div class="lesson-text">${lesson}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </section>
+            `;
+
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                MathJax.typesetPromise();
+            }
+
+            if (window.innerWidth <= 768) {
+                document.getElementById('sidebar').classList.remove('open');
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleSolution(el) {
+            const content = el.nextElementSibling;
+            const isVisible = content.style.display === 'block';
+            content.style.display = isVisible ? 'none' : 'block';
+            el.querySelector('span').innerText = isVisible ? 'Xem lời giải' : 'Ẩn lời giải';
+            el.querySelector('svg').innerHTML = isVisible ? '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>' : '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
+        }
+
+        // Thay thế bằng execCommand để hoạt động tốt trong Iframe (Canvas Preview)
+        function copyFormula(btn, text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            textArea.style.position = "fixed";  // Avoid scrolling to bottom
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                btn.classList.add('copied');
+                const originalIcon = btn.innerHTML;
+                btn.innerHTML = '<svg class="svg-icon" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = originalIcon;
+                }, 1500);
+            } catch (err) {
+                console.error('Lỗi khi copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('open');
+        }
+
+        // --- Logic xử lý kéo thả (Resize Sidebar) ---
+        const resizer = document.getElementById('dragMe');
+        let startX = 0;
+        let startWidth = 0;
+
+        const mouseDownHandler = function(e) {
+            // Lấy tọa độ X ban đầu và chiều rộng hiện tại
+            startX = e.clientX;
+            startWidth = document.getElementById('sidebar').getBoundingClientRect().width;
+            
+            // Gắn sự kiện khi rê và thả chuột
+            document.addEventListener('mousemove', mouseMoveHandler);
+            document.addEventListener('mouseup', mouseUpHandler);
+            document.body.classList.add('is-resizing');
+        };
+
+        const mouseMoveHandler = function(e) {
+            // Tính toán khoảng cách kéo
+            const dx = e.clientX - startX;
+            let newWidth = startWidth + dx;
+            
+            // Giới hạn độ rộng Sidebar (nhỏ nhất: 200px, lớn nhất: 600px)
+            if (newWidth < 200) newWidth = 200;
+            if (newWidth > 600) newWidth = 600;
+            
+            // Cập nhật lại biến CSS để giao diện tự động co giãn
+            document.documentElement.style.setProperty('--sidebar-width', `${newWidth}px`);
+        };
+
+        const mouseUpHandler = function() {
+            // Xóa sự kiện khi đã thả chuột ra
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+            document.body.classList.remove('is-resizing');
+        };
+
+        resizer.addEventListener('mousedown', mouseDownHandler);
+        // --- Kết thúc phần Resize Sidebar ---
+
+        init();
+    </script>
+</body>
+</html>
